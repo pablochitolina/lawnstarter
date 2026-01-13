@@ -7,9 +7,11 @@ if [ ! -f database/database.sqlite ]; then
     touch database/database.sqlite
 fi
 
-# Run migrations
-echo "Running migrations..."
-php artisan migrate --force
+# Run migrations only if this is the main server container (running php-fpm)
+if [ "$1" = "php-fpm" ]; then
+    echo "Running migrations..."
+    php artisan migrate --force
+fi
 
 # Execute the main command (php-fpm)
 exec "$@"
