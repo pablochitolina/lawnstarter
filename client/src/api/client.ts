@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 export const apiClient = axios.create({
-    baseURL: '/api' // Nginx proxies this to backend
+    baseURL: '/api'
 });
 
 export const searchSwapi = async (query: string, type: 'people' | 'movies') => {
