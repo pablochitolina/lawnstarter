@@ -14,7 +14,10 @@ vendor/
 
 # Secrets & Envs
 .env
+.env
 .env.backup
+.env_bk
+*_bk
 *.log
 *.sqlite
 
