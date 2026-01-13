@@ -18,6 +18,9 @@ A full-stack application to search the Star Wars API, built with **Laravel 11** 
    ```bash
    docker-compose up -d --build
    ```
+   ```
+   > **Automated Setup**: This command will automatically build the images, create the SQLite database, and run all migrations. No manual setup required.
+   >
    > First boot may take a minute for containers to initialize and Nginx to be ready.
 
 2. **Access**

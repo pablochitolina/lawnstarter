@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use App\Jobs\LogSearchQuery;
 use Illuminate\Support\Facades\Cache;
 
-class SearchController extends Controller
+class SearchController
 {
     public function search(Request $request)
     {
