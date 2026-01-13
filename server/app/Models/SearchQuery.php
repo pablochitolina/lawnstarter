@@ -16,6 +16,4 @@ class SearchQuery extends Model
     protected $casts = [
         'created_at' => 'datetime',
     ];
-
-    //
 }

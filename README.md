@@ -1,4 +1,4 @@
-# Star Wars API Search App
+# LawnStarter
 
 A full-stack application to search the Star Wars API, built with **Laravel 11** (Backend) and **React + Vite** (Frontend), orchestrated via **Docker**.
 
@@ -14,25 +14,18 @@ A full-stack application to search the Star Wars API, built with **Laravel 11** 
 
 ## Quick Start
 
-1. **Setup** (Scaffold dependencies)
-   ```bash
-   ./setup.sh
-   # This script uses Docker to create the Laravel and React projects + installs dependencies.
-   # If you have already run this or simply want to boot:
-   ```
-
-2. **Boot Application**
+1. **Boot Application**
    ```bash
    docker-compose up -d --build
    ```
    > First boot may take a minute for containers to initialize and Nginx to be ready.
 
-3. **Access**
+2. **Access**
    - **App**: [http://localhost:8080](http://localhost:8080)
    - **API Search**: `http://localhost:8080/api/search?q=luke&type=people`
    - **API Stats**: `http://localhost:8080/api/stats`
 
-4. **Shutdown**
+3. **Shutdown**
    ```bash
    docker-compose down
    ```

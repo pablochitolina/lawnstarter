@@ -11,17 +11,11 @@ class LogSearchQuery implements ShouldQueue
 
     protected $data;
 
-    /**
-     * Create a new job instance.
-     */
     public function __construct(array $data)
     {
         $this->data = $data;
     }
 
-    /**
-     * Execute the job.
-     */
     public function handle(): void
     {
         \App\Models\SearchQuery::create($this->data);
