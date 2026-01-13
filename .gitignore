@@ -1,39 +1,22 @@
 # System
 .DS_Store
-Thumbs.db
 
-# VS Code
+# IDE
 .vscode/
+
+# Dependencies
+node_modules/
+vendor/
+
+# Build
+**/dist/
+**/build/
+
+# Secrets & Envs
+.env
+.env.backup
+*.log
+*.sqlite
 
 # Docker
 docker-compose.override.yml
-
-# Backend (Laravel)
-server/vendor/
-server/node_modules/
-server/public/hot
-server/public/storage
-server/storage/*.key
-server/.env
-server/.env.backup
-server/.phpunit.result.cache
-server/Homestead.json
-server/Homestead.yaml
-server/auth.json
-server/npm-debug.log
-server/yarn-error.log
-server/.fleet
-server/.idea
-server/.vscode
-
-# Frontend (React)
-client/node_modules/
-client/dist/
-client/.env
-client/npm-debug.log
-client/yarn-error.log
-client/package-lock.json      # Optional, usually kept but user might want strict ignores
-client/yarn.lock             # Optional
-
-# Logs
-*.log
