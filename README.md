@@ -30,6 +30,17 @@ A full-stack application to search the Star Wars API, built with **Laravel 11** 
    docker-compose down
    ```
 
+## Testing
+### Backend (Laravel)
+```bash
+docker-compose exec server php artisan test
+```
+
+### Frontend (Vitest)
+```bash
+docker-compose exec client npm run test
+```
+
 ## Architecture Decisions
 
 ### Stack
