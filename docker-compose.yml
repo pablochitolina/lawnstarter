@@ -1,0 +1,87 @@
+services:
+    server:
+        build:
+            context: ./server
+            dockerfile: Dockerfile
+        volumes:
+            - ./server:/var/www/html
+        environment:
+            APP_ENV: local
+            APP_DEBUG: 'true'
+            APP_KEY: 'base64:...' # Will need user to generate or I default it
+            DB_CONNECTION: sqlite
+            QUEUE_CONNECTION: redis
+            CACHE_STORE: redis
+            REDIS_HOST: redis
+        networks:
+            - swapi-net
+
+    worker:
+        build:
+            context: ./server
+            dockerfile: Dockerfile
+        command: php artisan queue:work --tries=3
+        volumes:
+            - ./server:/var/www/html
+        environment:
+            APP_ENV: local
+            DB_CONNECTION: sqlite
+            QUEUE_CONNECTION: redis
+            REDIS_HOST: redis
+            CACHE_STORE: redis
+        depends_on:
+            - server
+            - redis
+        networks:
+            - swapi-net
+
+    scheduler:
+        build:
+            context: ./server
+            dockerfile: Dockerfile
+        command: php artisan schedule:work
+        volumes:
+            - ./server:/var/www/html
+        environment:
+            APP_ENV: local
+            DB_CONNECTION: sqlite
+            QUEUE_CONNECTION: redis
+            REDIS_HOST: redis
+            CACHE_STORE: redis
+        depends_on:
+            - server
+            - redis
+        networks:
+            - swapi-net
+
+    client:
+        image: node:20-alpine
+        working_dir: /app
+        command: npm run dev -- --host
+        ports:
+            - "5173:5173"
+        volumes:
+            - ./client:/app
+        networks:
+            - swapi-net
+
+    redis:
+        image: redis:alpine
+        networks:
+            - swapi-net
+
+    nginx:
+        image: nginx:alpine
+        ports:
+            - "8080:80"
+        volumes:
+            - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+        depends_on:
+            - server
+            - client
+        networks:
+            - swapi-net
+
+networks:
+    swapi-net:
+        driver: bridge
