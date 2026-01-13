@@ -55,9 +55,9 @@ services:
             - swapi-net
 
     client:
-        image: node:20-alpine
-        working_dir: /app
-        command: npm run dev -- --host
+        build:
+            context: ./client
+            dockerfile: Dockerfile
         ports:
             - "5173:5173"
         volumes:
