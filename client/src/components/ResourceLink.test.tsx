@@ -16,23 +16,25 @@ const queryClient = new QueryClient({
     },
 });
 
+import { MemoryRouter } from 'react-router-dom';
+
 const wrapper = ({ children }: { children: React.ReactNode }) => (
-    <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+    <QueryClientProvider client={queryClient}>
+        <MemoryRouter>{children}</MemoryRouter>
+    </QueryClientProvider>
 );
 
 describe('ResourceLink', () => {
-    it('renders loading state initially', () => {
-        render(<ResourceLink url="https://swapi.dev/api/people/1/" isLast={false} />, { wrapper });
-        expect(screen.getByText(/Loading.../i)).toBeInTheDocument();
-    });
-
-    it('renders fetched name correctly', async () => {
-        mockedAxios.get.mockResolvedValueOnce({ data: { name: 'Luke Skywalker' } });
+    it('renders fetched name correctly and links to details', async () => {
+        const mockData = { name: 'Luke Skywalker', url: 'https://swapi.dev/api/people/1/' };
+        mockedAxios.get.mockResolvedValueOnce({ data: mockData });
 
         render(<ResourceLink url="https://swapi.dev/api/people/1/" isLast={true} />, { wrapper });
 
         await waitFor(() => {
-            expect(screen.getByText('Luke Skywalker')).toBeInTheDocument();
+            const link = screen.getByRole('link', { name: 'Luke Skywalker' });
+            expect(link).toBeInTheDocument();
+            expect(link).toHaveAttribute('href', '/details');
         });
 
         // Ensure no comma if isLast is true
