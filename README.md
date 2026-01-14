@@ -4,14 +4,24 @@
 ![Coverage](https://img.shields.io/badge/coverage-98%25_Backend_/_95%25_Frontend-success)
 ![Stack](https://img.shields.io/badge/stack-Laravel_12_x_React_19-blueviolet)
 
+## Personal Challenge: Why Laravel?
+Although my recent professional work has been focused on a different backend stack, I chose to build this project with **PHP/Laravel** to demonstrate **versatility** and **engineering maturity**.
+
+My goal was to prove that strong software principles, clean architecture and DevOps are language-agnostic. By building a robust application in a technology I haven't worked with in a while, I wanted to showcase my ability to:
+*   **Adapt Components**: Integrating Laravel 12's modern features (Jobs, Pipelines) into a production workflow.
+*   **Enforce Standards**: Configuring strict typing, PCOV coverage, and Docker optimization.
+*   **Deliver Quality**: Ensuring the result is not just "working code," but a maintainable, high-performance system.
+
+---
+
 A high-performance, containerized full-stack application designed to demonstrate **Modern PHP**, **Robust Architecture**, and **Developer Experience (DX)**.
 
-## 🚀 Why This Project Stands Out
+## Why This Project Stands Out
 
-This is not just a simple API wrapper. It is engineered to handle scale, ensure data integrity, and provide a seamless developer experience.
+This is not just a simple API wrapper. I engineered it to handle scale, ensure data integrity, and provide a seamless developer experience.
 
 ### 1. High-Performance Architecture
-Instead of blocking the user request to log statistics, this project uses **Asynchronous Queue Workers**.
+Instead of blocking the user request to log statistics, I implemented **Asynchronous Queue Workers**.
 *   **Zero Latency Logging**: Search queries are dispatched to a Redis Queue (`LogSearchQuery` Job) instantly.
 *   **Background Processing**: A dedicated worker container processes logs without impacting the user's response time.
 *   **Scheduled Aggregation**: Heavy statistical math ("Most popular hour", "Avg duration") runs every 5 minutes via the Scheduler, caching results to Redis.
@@ -34,7 +44,7 @@ Onboarding a new developer takes **one command**.
 
 ---
 
-## 🏗️ Architecture
+## Architecture
 
 The application is unified behind an **Nginx Reverse Proxy** on port `8080`.
 
@@ -55,7 +65,7 @@ graph TD
 
 ---
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 | Component | Technology | Reasoning |
 | :--- | :--- | :--- |
@@ -68,7 +78,7 @@ graph TD
 
 ---
 
-## ⚡ Quick Start
+## Quick Start
 
 ### Prerequisites
 *   Docker & Docker Compose
@@ -77,7 +87,13 @@ graph TD
 ```bash
 docker-compose up -d --build
 ```
-> **Note**: The first run will automatically install dependencies and setup the database. Wait for `[NOTICE] ready to handle connections` in the logs.
+> **Note**: The first run will automatically install dependencies and setup the database.
+>
+> To watch the progress, run:
+> ```bash
+> docker-compose logs -f
+> ```
+> Wait for `NOTICE: ready to handle connections` to appear in the server logs.
 
 ### 2. Access
 *   **Web App**: [http://localhost:8080](http://localhost:8080)
@@ -88,13 +104,13 @@ If you ever need a fresh slate:
 ```bash
 ./reset.sh
 ```
-*(Wipes database, volumes, and vendor folders for a clean 0-state install)*
+*(I created this script to facilitate the validation of the "work on any machine" guarantee, ensuring a consistent clean slate for testing. It wipes the database, volumes, `node_modules`, and `vendor` folders.)*
 
 ---
 
-## 🧪 Testing & Coverage
+## Testing & Coverage
 
-We maintain high standards for code reliability.
+I maintain high standards for code reliability.
 
 ### Backend (Laravel)
 ```bash
@@ -103,8 +119,10 @@ docker-compose exec server php artisan test
 
 # Generate Coverage Report (~98%)
 docker-compose exec server php artisan test --coverage
+
+# View Coverage Report
+open server/coverage/index.html
 ```
-> **View Report**: Open `server/coverage/index.html` in your browser.
 
 ### Frontend (React)
 ```bash
@@ -113,12 +131,14 @@ docker-compose exec client npm run test
 
 # Generate Coverage Report (~95%)
 docker-compose exec client npm run test:coverage
+
+# View Coverage Report
+open client/coverage/index.html
 ```
-> **View Report**: Open `client/coverage/index.html` in your browser.
 
 ---
 
-## 🧩 Key Features Breakdown
+## Key Features Breakdown
 
 ### Search Engine
 *   **Deep Linking**: Navigate directly to `/details` from search results or related resources (e.g., clicking a Movie title in a Character's profile).
@@ -130,7 +150,7 @@ docker-compose exec client npm run test:coverage
 
 ---
 
-## 📂 Project Structure
+## Project Structure
 
 ```
 ├── client/              # React Application
