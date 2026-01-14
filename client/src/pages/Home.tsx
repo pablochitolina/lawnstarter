@@ -23,7 +23,7 @@ export default function Home() {
     });
 
     const handleSearch = () => {
-        if (query.trim()) {
+        if (query.trim().length >= 2) {
             setSearchTrigger(query);
         }
     };
@@ -33,6 +33,14 @@ export default function Home() {
     };
 
     const isSearching = isLoading && !!searchTrigger;
+    const isSearchDisabled = query.trim().length < 2;
+
+    const handleTypeChange = (newType: 'people' | 'movies') => {
+        setType(newType);
+        setSearchTrigger('');
+        setQuery('');
+        setSearchParams({ type: newType });
+    };
 
     return (
         <div className="flex flex-col lg:flex-row justify-center items-start pt-12 px-4 gap-8">
@@ -50,7 +58,7 @@ export default function Home() {
                             type="radio"
                             name="type"
                             checked={type === 'people'}
-                            onChange={() => setType('people')}
+                            onChange={() => handleTypeChange('people')}
                             className="hidden"
                         />
                         <span className="font-bold text-sm text-gray-800">People</span>
@@ -63,7 +71,7 @@ export default function Home() {
                             type="radio"
                             name="type"
                             checked={type === 'movies'}
-                            onChange={() => setType('movies')}
+                            onChange={() => handleTypeChange('movies')}
                             className="hidden"
                         />
                         <span className="font-bold text-sm text-gray-800">Movies</span>
@@ -81,8 +89,8 @@ export default function Home() {
 
                 <button
                     onClick={handleSearch}
-                    disabled={!query}
-                    className={`w-full py-2.5 rounded-full font-bold text-white text-sm tracking-wide transition-all duration-200 shadow-md ${!query
+                    disabled={isSearchDisabled}
+                    className={`w-full py-2.5 rounded-full font-bold text-white text-sm tracking-wide transition-all duration-200 shadow-md ${isSearchDisabled
                         ? 'bg-gray-300 cursor-not-allowed'
                         : 'bg-green-sw hover:bg-green-600'
                         }`}
@@ -110,7 +118,7 @@ export default function Home() {
 
                 {isFetched && results && results.results && results.results.length === 0 && (
                     <div className="text-center text-gray-400 mt-32">
-                        <p className="font-bold">No results found.</p>
+                        <p className="font-bold">There are zero matches.<br />Use the form to search for People or Movies.</p>
                     </div>
                 )}
 
