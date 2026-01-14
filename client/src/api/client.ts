@@ -4,7 +4,7 @@ export const apiClient = axios.create({
     baseURL: '/api'
 });
 
-export const searchSwapi = async (query: string, type: 'people' | 'movies') => {
+export const search = async (query: string, type: 'people' | 'movies') => {
     const response = await apiClient.get('/search', { params: { q: query, type } });
     return response.data;
 };

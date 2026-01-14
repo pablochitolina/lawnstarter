@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { searchSwapi } from '../api/client';
+import { search } from '../api/client';
 import { Link } from 'react-router-dom';
 
 export default function Home() {
@@ -10,7 +10,7 @@ export default function Home() {
 
     const { data: results, isLoading, isFetched } = useQuery({
         queryKey: ['search', searchTrigger, type],
-        queryFn: () => searchSwapi(searchTrigger, type),
+        queryFn: () => search(searchTrigger, type),
         enabled: !!searchTrigger,
     });
 
