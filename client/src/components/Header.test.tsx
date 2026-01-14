@@ -5,6 +5,6 @@ import Header from './Header';
 describe('Header', () => {
     it('renders the header title correctly', () => {
         render(<Header />);
-        expect(screen.getByText('LawnStarter')).toBeInTheDocument();
+        expect(screen.getByText('SWStarter')).toBeInTheDocument();
     });
 });

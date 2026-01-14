@@ -27,18 +27,22 @@ describe('Home Page', () => {
         expect(screen.getByRole('button', { name: 'SEARCH' })).toBeInTheDocument();
     });
 
-    it('disables search button when input is empty', () => {
+    it('disables search button when input is empty or too short', () => {
         render(<Home />, { wrapper });
         const button = screen.getByRole('button', { name: 'SEARCH' });
         expect(button).toBeDisabled();
+
+        const input = screen.getByPlaceholderText(/e.g. Chewbacca/i);
+        fireEvent.change(input, { target: { value: 'L' } });
+        expect(button).toBeDisabled();
     });
 
-    it('enables search button when input has text', () => {
+    it('enables search button when input has at least 2 chars', () => {
         render(<Home />, { wrapper });
         const input = screen.getByPlaceholderText(/e.g. Chewbacca/i);
         const button = screen.getByRole('button', { name: 'SEARCH' });
 
-        fireEvent.change(input, { target: { value: 'Luke' } });
+        fireEvent.change(input, { target: { value: 'Lu' } });
         expect(button).not.toBeDisabled();
     });
 
@@ -75,32 +79,38 @@ describe('Home Page', () => {
         fireEvent.click(button);
 
         await waitFor(() => {
-            expect(screen.getByText(/No results found/i)).toBeInTheDocument();
+            expect(screen.getByText(/There are zero matches/i)).toBeInTheDocument();
         });
     });
 
-    it('updates search type when radio button is clicked', () => {
+    it('updates search type and resets search trigger / results when switched', async () => {
+        (apiClient.search as any).mockResolvedValue({
+            results: [{ name: 'Luke Skywalker', url: 'https://swapi.dev/api/people/1/' }],
+        });
+
         render(<Home />, { wrapper });
 
         const moviesRadio = screen.getByLabelText(/Movies/i);
-        const peopleRadio = screen.getByLabelText(/People/i);
+        const input = screen.getByPlaceholderText(/e.g. Chewbacca/i);
+        const button = screen.getByRole('button', { name: 'SEARCH' });
 
-        expect(peopleRadio).toBeChecked();
-        expect(moviesRadio).not.toBeChecked();
+        fireEvent.change(input, { target: { value: 'Luke' } });
+        fireEvent.click(button);
 
+        expect(await screen.findByText('Luke Skywalker')).toBeInTheDocument();
         fireEvent.click(moviesRadio);
 
-        expect(moviesRadio).toBeChecked();
-        expect(peopleRadio).not.toBeChecked();
-        expect(moviesRadio).toBeChecked();
-        expect(peopleRadio).not.toBeChecked();
+        expect(screen.queryByText('Luke Skywalker')).not.toBeInTheDocument();
+        expect(screen.getByLabelText(/Movies/i)).toBeChecked();
+
+        expect(input).toHaveValue('');
     });
 
     it('triggers search on Enter key', () => {
         render(<Home />, { wrapper });
         const input = screen.getByPlaceholderText(/e.g. Chewbacca/i);
 
-        fireEvent.change(input, { target: { value: 'Han' } });
+        fireEvent.change(input, { target: { value: 'Han' } }); // Valid length
         fireEvent.keyDown(input, { key: 'Enter', code: 'Enter' });
 
         // Since looking for "Searching..." is racy/dependent on mock, 
