@@ -1,5 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 interface ResourceLinkProps {
     url: string;
@@ -21,16 +22,17 @@ export default function ResourceLink({ url, isLast }: ResourceLinkProps) {
 
     const name = data.name || data.title;
 
+    const type = url.includes('/films/') ? 'movies' : 'people';
+
     return (
         <span>
-            <a
-                href={url}
-                target="_blank"
-                rel="noreferrer"
+            <Link
+                to="/details"
+                state={{ item: data, type }}
                 className="text-blue-500 hover:underline"
             >
                 {name}
-            </a>
+            </Link>
             {!isLast && <span className="text-gray-800 mr-1">,</span>}
         </span>
     );

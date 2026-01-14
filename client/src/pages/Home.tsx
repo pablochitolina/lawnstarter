@@ -1,12 +1,20 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { search } from '../api/client';
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 
 export default function Home() {
-    const [query, setQuery] = useState('');
-    const [type, setType] = useState<'people' | 'movies'>('people');
-    const [searchTrigger, setSearchTrigger] = useState('');
+    const [searchParams, setSearchParams] = useSearchParams();
+
+    const [query, setQuery] = useState(searchParams.get('q') || '');
+    const [type, setType] = useState<'people' | 'movies'>((searchParams.get('type') as 'people' | 'movies') || 'people');
+    const [searchTrigger, setSearchTrigger] = useState(searchParams.get('q') || '');
+
+    useEffect(() => {
+        if (searchTrigger) {
+            setSearchParams({ q: searchTrigger, type });
+        }
+    }, [searchTrigger, type, setSearchParams]);
 
     const { data: results, isLoading, isFetched } = useQuery({
         queryKey: ['search', searchTrigger, type],
