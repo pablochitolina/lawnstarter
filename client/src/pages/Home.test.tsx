@@ -78,4 +78,33 @@ describe('Home Page', () => {
             expect(screen.getByText(/No results found/i)).toBeInTheDocument();
         });
     });
+
+    it('updates search type when radio button is clicked', () => {
+        render(<Home />, { wrapper });
+
+        const moviesRadio = screen.getByLabelText(/Movies/i);
+        const peopleRadio = screen.getByLabelText(/People/i);
+
+        expect(peopleRadio).toBeChecked();
+        expect(moviesRadio).not.toBeChecked();
+
+        fireEvent.click(moviesRadio);
+
+        expect(moviesRadio).toBeChecked();
+        expect(peopleRadio).not.toBeChecked();
+        expect(moviesRadio).toBeChecked();
+        expect(peopleRadio).not.toBeChecked();
+    });
+
+    it('triggers search on Enter key', () => {
+        render(<Home />, { wrapper });
+        const input = screen.getByPlaceholderText(/e.g. Chewbacca/i);
+
+        fireEvent.change(input, { target: { value: 'Han' } });
+        fireEvent.keyDown(input, { key: 'Enter', code: 'Enter' });
+
+        // Since looking for "Searching..." is racy/dependent on mock, 
+        // we can check if the button became "SEARCHING..." or check API call count.
+        expect(screen.getByText('Searching...')).toBeInTheDocument();
+    });
 });

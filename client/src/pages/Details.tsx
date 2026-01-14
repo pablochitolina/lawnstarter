@@ -59,7 +59,7 @@ export default function Details() {
                                     isLast={i === arr.length - 1}
                                 />
                             ))}
-                            {(!item.films && !item.characters) && (
+                            {((!item.films || item.films.length === 0) && (!item.characters || item.characters.length === 0)) && (
                                 <span className="text-gray-400 italic">None available</span>
                             )}
                         </div>
