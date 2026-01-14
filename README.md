@@ -1,16 +1,14 @@
 # LawnStarter
 
-A full-stack application to search the Star Wars API, built with **Laravel 11** (Backend) and **React + Vite** (Frontend), orchestrated via **Docker**.
+A full-stack application to search the Star Wars API, built with **Laravel 12** (Backend) and **React + Vite** (Frontend), orchestrated via **Docker**.
 
 ## Features
 - **Search**: Search for People or Movies using the Star Wars API.
 - **Statistics**: Tracks search queries and computes stats (Top Terms, Avg Duration, Popular Hour) every 5 minutes.
 - **Caching**: SWAPI responses are cached for 1 hour; Stats are cached for 10 minutes.
-- **Responsive UI**: Pixel-perfect implementation matching Zeplin mocks (approx).
 
 ## Prerequisites
 - Docker & Docker Compose
-- Space for Docker images (~500MB)
 
 ## Quick Start
 
@@ -23,17 +21,7 @@ A full-stack application to search the Star Wars API, built with **Laravel 11** 
    >
    > First boot may take a minute for containers to initialize and Nginx to be ready.
 
-2. **Access**
-   - **App**: [http://localhost:8080](http://localhost:8080)
-   - **API Search**: `http://localhost:8080/api/search?q=luke&type=people`
-   - **API Stats**: `http://localhost:8080/api/stats`
-
-3. **Shutdown**
-   ```bash
-   docker-compose down
-   ```
-
-4. **Verifying Status**
+2. **Verifying Status**
    Check if all containers are running:
    ```bash
    docker-compose ps
@@ -50,6 +38,18 @@ A full-stack application to search the Star Wars API, built with **Laravel 11** 
    >
    > Only then is the app ready to be accessed in the browser.
 
+3. **Access**
+   - **App**: [http://localhost:8080](http://localhost:8080)
+   - **API Search**: `http://localhost:8080/api/search?q=luke&type=people`
+   - **API Stats**: `http://localhost:8080/api/stats`
+
+4. **Shutdown**
+   ```bash
+   docker-compose down
+   ```
+
+
+
 ## Testing
 ### Backend (Laravel)
 ```bash
@@ -65,7 +65,7 @@ docker-compose exec client npm run test
 
 ### Stack
 - **Frontend**: React (TS) + Vite. simple, fast, modern. React Query handles async state. Tailwind CSS handles styling relative to Mocks.
-- **Backend**: Laravel 11. Robust, handles Queues/Scheduling natively.
+- **Backend**: Laravel 12. Robust, handles Queues/Scheduling natively.
 - **Infrastructure**: Nginx reverse proxy unifies `client` (5173) and `server` (9000) under port 8080.
 
 ### Statistics Implementation
