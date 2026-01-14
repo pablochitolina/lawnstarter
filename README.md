@@ -104,7 +104,7 @@ If you ever need a fresh slate:
 ```bash
 ./reset.sh
 ```
-*(I created this script to facilitate the validation of the "work on any machine" guarantee, ensuring a consistent clean slate for testing. It wipes the database, volumes, `node_modules`, and `vendor` folders.)*
+*(I created this script to facilitate the validation of the "work on any machine" thing, ensuring a consistent clean slate for testing. It wipes the database, volumes, `node_modules`, and `vendor` folders.)*
 
 ---
 
@@ -139,6 +139,13 @@ open client/coverage/index.html
 ---
 
 ## Key Features Breakdown
+
+### Internationalization (i18n)
+*   **Multi-language Support**: Full support for **English**, **Portuguese**, and **Spanish**.
+*   **Implementation**: Built with `react-i18next`, featuring:
+    *   **Browser Detection**: Automatically detects the user's preferred language.
+    *   **Dynamic Loading**: JSON-based locale files (`locales/{en,pt,es}.ts`) for easy maintainability.
+    *   **Hot Switching**: Instant language toggle from the Header flags without refreshing the page.
 
 ### Search Engine
 *   **Deep Linking**: Navigate directly to `/details` from search results or related resources (e.g., clicking a Movie title in a Character's profile).
