@@ -20,6 +20,7 @@ RUN docker-php-ext-install pdo_sqlite mbstring exif pcntl bcmath gd
 
 # Install Redis extension
 RUN pecl install redis && docker-php-ext-enable redis
+RUN pecl install pcov && docker-php-ext-enable pcov
 
 # Get latest Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
