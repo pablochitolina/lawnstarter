@@ -1,7 +1,9 @@
 import { useLocation, useNavigate } from 'react-router-dom';
 import ResourceLink from '../components/ResourceLink';
+import { useTranslation } from 'react-i18next';
 
 export default function Details() {
+    const { t } = useTranslation();
     const location = useLocation();
     const navigate = useNavigate();
     const { item, type } = location.state || {};
@@ -10,7 +12,7 @@ export default function Details() {
         return (
             <div className="flex flex-col items-center justify-center pt-20">
                 <p className="mb-4 text-gray-500">No item selected.</p>
-                <button onClick={() => navigate('/')} className="text-green-sw font-bold hover:underline">Back to Search</button>
+                <button onClick={() => navigate('/')} className="text-green-sw font-bold hover:underline uppercase">{t('details.back_to_search')}</button>
             </div>
         );
     }
@@ -25,13 +27,13 @@ export default function Details() {
                 <div className="flex flex-col md:flex-row gap-12">
                     <div className="flex-1">
                         <h3 className="font-bold text-lg mb-4 border-b border-light-gray pb-2 text-gray-900">
-                            {type === 'people' ? 'Details' : 'Opening Crawl'}
+                            {type === 'people' ? 'Details' : t('details.opening_crawl')}
                         </h3>
 
                         {type === 'people' && (
                             <ul className="space-y-2 text-sm text-gray-700">
-                                <li>Birth Year: {item.birth_year}</li>
-                                <li>Gender: {item.gender}</li>
+                                <li>{t('details.birth_year')}: {item.birth_year}</li>
+                                <li>{t('details.gender')}: {item.gender === 'unknown' ? t('details.unknown_gender') : item.gender}</li>
                                 <li>Eye Color: {item.eye_color}</li>
                                 <li>Hair Color: {item.hair_color}</li>
                                 <li>Height: {item.height}</li>
@@ -48,7 +50,7 @@ export default function Details() {
 
                     <div className="flex-1">
                         <h3 className="font-bold text-lg mb-4 border-b border-light-gray pb-2 text-gray-900">
-                            {type === 'people' ? 'Movies' : 'Characters'}
+                            {type === 'people' ? t('details.related_movies') : t('details.related_characters')}
                         </h3>
 
                         <div className="text-sm text-blue-500 leading-relaxed">
@@ -60,7 +62,7 @@ export default function Details() {
                                 />
                             ))}
                             {((!item.films || item.films.length === 0) && (!item.characters || item.characters.length === 0)) && (
-                                <span className="text-gray-400 italic">None available</span>
+                                <span className="text-gray-400 italic">{t('details.none_available')}</span>
                             )}
                         </div>
                     </div>
@@ -71,7 +73,7 @@ export default function Details() {
                         onClick={() => navigate('/')}
                         className="bg-green-sw text-white text-sm font-bold py-2 px-6 rounded-full hover:bg-green-600 shadow-md uppercase tracking-wide transition-all"
                     >
-                        Back to Search
+                        {t('details.back_to_search')}
                     </button>
                 </div>
             </div>

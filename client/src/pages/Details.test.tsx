@@ -1,5 +1,5 @@
 import { render, screen, fireEvent } from '@testing-library/react';
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, vi } from 'vitest';
 import { MemoryRouter, Routes, Route } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import Details from './Details';
@@ -7,6 +7,25 @@ import Details from './Details';
 const queryClient = new QueryClient({
     defaultOptions: { queries: { retry: false } },
 });
+
+// Mock react-i18next
+vi.mock('react-i18next', () => ({
+    useTranslation: () => ({
+        t: (key: string) => {
+            const translations: Record<string, string> = {
+                'details.back_to_search': 'Back to Search',
+                'details.birth_year': 'Birth Year',
+                'details.gender': 'Gender',
+                'details.opening_crawl': 'Opening Crawl',
+                'details.related_movies': 'Movies',
+                'details.related_characters': 'Characters',
+                'details.none_available': 'None available',
+                'details.unknown_gender': 'Unknown',
+            };
+            return translations[key] || key;
+        },
+    }),
+}));
 
 const wrapper = ({ children }: { children: React.ReactNode }) => (
     <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
