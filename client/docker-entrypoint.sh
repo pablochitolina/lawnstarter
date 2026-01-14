@@ -1,7 +1,7 @@
 #!/bin/sh
 set -e
 
-if [ ! -d "node_modules" ]; then
+if [ ! -f "node_modules/.bin/vite" ]; then
     echo "Installing Node dependencies..."
     npm install
 fi
